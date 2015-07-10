@@ -8,6 +8,8 @@ class Primes(object):
     """
     def __init__(self):
         self.prime_list = [2]
+        self.current_num = 3
+        self.num_primes = 200000
     
     def prime_check(self, check_val):
         """
@@ -25,26 +27,25 @@ class Primes(object):
                 if sqrt(check_val) < prime:
                     break
         return is_prime
-    
-    
-    def prime_gen(self, num_primes=200000):
+
+    def prime_gen(self):
         """
         Generates the first 200,000. Takes the optional kwarg last_check to change
         the number of primes to generate.
         """
-        num = 3
-        while len(self.prime_list) < num_primes:
-            if self.prime_check(num) == True:
-                self.prime_list.append(num)
-            num += 2        # Ensure number is always odd.
+        while len(self.prime_list) < self.num_primes:
+            if self.prime_check(self.current_num):
+                self.prime_list.append(self.current_num)
+            self.current_num += 2        # Ensure number is always odd.
         
 
-primes = Primes()
-primes.prime_gen()
-  
-with open('test.txt') as data_file:
-    N = int(data_file.readline())
-    prime_idxs = map(int, data_file.readline().split())
-    for idx in prime_idxs:
-        print primes.prime_list[idx - 1],
+if __name__ == "__main__":
+    primes = Primes()
+    primes.prime_gen()
+
+    with open('test.txt') as data_file:
+        N = int(data_file.readline())
+        prime_idxs = map(int, data_file.readline().split())
+        for idx in prime_idxs:
+            print primes.prime_list[idx - 1],
     
